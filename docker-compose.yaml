@@ -1,0 +1,14 @@
+services:
+  apache:
+    image: httpd:latest
+    container_name: test-signed-content
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes:
+      - ./aplicacao-01:/usr/local/apache2/htdocs/aplicacao-01/
+      - ./aplicacao-02:/usr/local/apache2/htdocs/aplicacao-02/
+      - ./config/httpd.conf:/usr/local/apache2/conf/httpd.conf
+      - ./config/aplicacao.conf:/usr/local/apache2/conf/extra/aplicacao.conf
+      - ./config/certs/site.cer:/usr/local/apache2/conf/server.crt
+      - ./config/certs/site.pkcs8:/usr/local/apache2/conf/server.key
