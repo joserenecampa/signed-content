@@ -26,6 +26,26 @@ async function getContentFromPKCS7(signedContent) {
     try {
         try {
             var p7 = forge.pkcs7.messageFromPem(signedContent);
+            console.log(p7);
+            console.debug(p7);
+            var content = '';
+            for (var bytes of p7.rawCapture.content.value[0].value) {
+                content = content + bytes.value;
+            }
+            var base64 = btoa(content);
+            return 'data:image/webp;base64, '+base64;
+        } catch (error) {
+            alert(error);
+        }
+    } catch (error) {
+        throw error;
+    }
+}
+
+async function verifyPKCS7(signedContent) {
+    try {
+        try {
+            var p7 = forge.pkcs7.messageFromPem(signedContent);
             var content = '';
             for (var bytes of p7.rawCapture.content.value[0].value) {
                 content = content + bytes.value;
